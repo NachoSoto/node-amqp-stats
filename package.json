@@ -2,17 +2,17 @@
   "author": "Tim Atkinson <tim@gochime.com> (http://timisbusy.com)",
   "name": "amqp-stats",
   "description": "Interface for RabbitMQ Management statistics. http://www.rabbitmq.com/management.html",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "repository": {
     "url": "https://github.com/timisbusy/node-amqp-stats"
   },
   "main": "index.js",
   "engines": {
-    "node": "~0.6.0"
+    "node": "0.8.x"
   },
   "dependencies": {
-    "request": "2.9.200",
-    "qs": "0.4.2"
+    "request": "latest",
+    "qs": "latest"
   },
   "devDependencies": {}
 }

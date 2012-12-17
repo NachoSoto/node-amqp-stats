@@ -3,9 +3,12 @@ var request = require('request'),
 
 function AmqpStats (_options) {
   var options = _options || {};
-  this.hostname = options.hostname || 'localhost:55672';
+  this.hostname = options.hostname || 'localhost';
+  this.port = options.port || 15672;
   this.username = options.username || 'guest';
   this.password = options.password || 'guest';
+
+  this.baseURL = "http://" + this.username + ":" + this.password + "@" + this.hostname + ":" + this.port + "/api/";
 }
 
 // Overview
@@ -179,18 +182,16 @@ AmqpStats.prototype.alive = function alivenessTest (vhost, callback) {
 AmqpStats.prototype.sendRequest = function sendRequest (method, path, params, callback) {
   request({
     method: method,
-    url: "http://" + this.username + ":" + this.password + "@" + this.hostname + "/api/" + path + qs.stringify(params),
+    url: this.baseURL + path + qs.stringify(params),
     body: qs.stringify(params),
-    form: true
+    form: true,
+    json: true
   }, function(err, res, data) {
-    if (err) { 
+    if (err) {
       callback(err);
     } else if (res.statusCode > 200) {
       callback(new Error("Status code: "+ res.statusCode));
-    } else if (data === "Not found.") {
-      callback(new Error("Undefined."));
     } else {
-      data = JSON.parse(data);
       callback(null, res, data);
     }
   });
